@@ -1,0 +1,63 @@
+<view class="videoContainer">
+  <!-- 头部区域 -->
+  <view class="header">
+    <image src="/static/images/video/video.jpg"></image>
+    <view class="search" bindtap="toSearch">搜索音乐</view>
+    <image src="/static/images/logo.png"></image>
+  </view>
+  <!-- 导航区域 -->
+  <scroll-view 
+  class="navContainer" 
+  enable-flex scroll-x 
+  scroll-into-view="{{'scroll'+selId}}" 
+  scroll-with-animation>
+    <!-- scroll-into-view设置移动到某个地方 id不能为纯数字开头 -->
+    <view id="{{'scroll'+item.id}}" class="navItem" wx:for="{{videoGroupList}}" wx:key="id" bindtap="changeId" data-id="{{item.id}}">
+      <view class="navContent {{item.id===selId?'active':''}}">{{item.name}}</view>
+    </view>
+  </scroll-view>
+  <!-- 视频播放区域 -->
+  <scroll-view 
+  class="playContainer" 
+  enable-flex scroll-y
+  refresher-enabled
+  bindrefresherrefresh="bindRefresh"
+  refresher-triggered="{{isFresh}}"
+  bindscrolltolower="bindToLower"
+  scroll-top="{{isDirection}}">
+    <view wx:for="{{videoAllData}}" wx:key="id">
+      <view class="videoItem" wx:for="{{item.urls}}" wx:key="id" wx:for-item="urlItem">
+        <video autoplay 
+        wx:if="{{urlItem.id===videoId}}" 
+        class="common" src="{{urlItem.url}}" 
+        bindplay="handlePlay"
+        id="{{urlItem.id}}"
+        objectFit="cover"
+        poster="{{videoList[item.id].data.coverUrl}}"
+        bindtimeupdate="handleTimeUpdate"
+        bindended="handleVideoEnd"></video>
+        <image wx:else 
+        class="common" 
+        src="{{videoList[item.id].data.coverUrl}}" 
+        id="{{urlItem.id}}" bindtap="handlePlay"></image>
+        <view class="footer" wx:if="{{videoList[item.id]}}">
+          <image class="avatar" src="{{videoList[item.id].data.creator.avatarUrl}}"></image>
+          <text class="nickName">{{videoList[item.id].data.creator.nickname}}</text>
+          <view class="comments_praised">
+            <text class="item">
+              <text class="iconfont icon-buoumaotubiao15"></text>
+            <text class="count">{{videoList[item.id].data.praisedCount}}</text>
+            </text>
+            <text class="item">
+              <text class="iconfont icon-pinglun1"></text>
+            <text class="count">{{videoList[item.id].data.commentCount}}</text>
+            </text>
+            <button open-type="share" class="item btn">
+              <text class="iconfont icon-gengduo"></text>
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

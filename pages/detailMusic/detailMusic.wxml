@@ -1,0 +1,33 @@
+<view class="songDetailContainer">
+    <view class="author" wx:for="{{musicInfo.ar}}" wx:key="id">{{item.name}}</view>
+    <view class="circle"></view>
+    <image class="needle {{isPlay && 'needlePlay'}}" src="/static/images/song/needle.png" />
+    <view class="poster {{isPlay && 'posterPlay'}}">
+        <image class="disc" src="/static/images/song/disc.png" />
+        <image class="musicImg" src="{{musicInfo.al.picUrl}}" />
+    </view>
+    <!-- 显示歌词区域 -->
+    <view class="songwordsControl">
+        <text class="songwords">{{lyric}}</text>
+    </view>
+    <!-- 控制音乐播放时长区域 -->
+    <view class="timeControl">
+        <text class="start">{{currentTime}}</text>
+        <view class="barControl">
+            <!-- 实时进度条 -->
+            <view class="timeBar" style="width:{{currentWidth+'rpx'}}">
+                <view class="whiteCircle"></view>
+            </view>
+        </view>
+        <text class="end">{{durationTime}}</text>
+    </view>
+    <!-- 底部播放控制区域 -->
+    <view class="musicControl">
+        <!-- 切换听歌模式 -->
+        <text class="iconfont icon-{{musicName}}" bindtap="handleMusicIcon"></text>
+        <text class="iconfont icon-shangyishou" id="pre" bindtap="handleSwitch"></text>
+        <text class="iconfont {{isPlay?'icon-zanting': 'icon-bofang'}} big" bindtap="handleMusicPlay"></text>
+        <text class="iconfont icon-next" id="next" bindtap="handleSwitch"></text>
+        <text class="iconfont icon-iconsMusicyemianbofangmoshiPlayList"></text>
+    </view>
+</view>

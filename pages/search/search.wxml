@@ -1,0 +1,46 @@
+<view class="searchContainer">
+    <!-- 搜索区域 -->
+    <view class="header">
+        <view class="searchInput">
+            <text class="iconfont icon-search1 searchIcon"></text>
+            <input type="text" value="{{inputContent}}" placeholder="{{showKeyword}}" class="input" placeholder-class="input-placeholder" bindinput="handleContent" />
+            <!-- hidden属性等同于vue中v-show 性能更好 -->
+           <text class="clear" bindtap="clearKeywordInfo" hidden="{{!inputContent}}">x</text>
+        </view>
+        <view class="cancel">取消</view>
+    </view>
+    <!-- 关键字搜索展示区域 -->
+    <block wx:if="{{searchList.length}}">
+        <view class="showKeywordContainer">
+            <view class="searchContent">搜索内容：“{{inputContent}}”</view>
+            <view class="searchList">
+                <view class="searchItem" wx:for="{{searchList}}" wx:key="id">
+                    <text class="iconfont icon-search1"></text>
+                    <text class="content">{{item.name}}</text>
+                </view>
+            </view>
+        </view>
+    </block>
+    <!-- 热搜榜 -->
+    <block wx:else>
+        <!-- 搜索历史记录 -->
+        <view class="historyContainer" wx:if="{{historyList.length}}">
+            <view class="title">历史记录</view>
+            <view class="historyList">
+                <view class="historyItem" wx:for="{{historyList}}" wx:key="item">{{item}}</view>
+            </view>
+            <text class="iconfont icon-shanchu delete" bindtap="deleteAllHistory"></text>
+        </view>
+        <view class="hotContainer">
+            <view class="title">热搜榜</view>
+            <!-- 热搜列表 -->
+            <view class="hotList">
+                <view class="hotItem" wx:for="{{hotList}}" wx:key="searchWord">
+                    <text class="order">{{index+1}}</text>
+                    <text>{{item.searchWord}}</text>
+                    <image class="iconImg" src="{{item.iconUrl}}" />
+                </view>
+            </view>
+        </view>
+    </block>
+</view>

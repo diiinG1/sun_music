@@ -1,0 +1,32 @@
+<view class="playListContainer">
+  <!-- 展示歌单信息区域 -->
+  <view class="InfoContainer">
+    <view class="content">
+      <image src="{{playListInfo.coverImgUrl}}"></image>
+      <view class="info">
+      <text class="title">{{playListInfo.name}}</text>
+      <text class="author">by {{playListInfo.creator.nickname}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="listContent">
+    <view class="listHeader">
+      <text>播放全部</text>
+      <text class="more">更多</text>
+    </view>
+
+    <!-- 歌曲列表 -->
+    <scroll-view class="listScroll" scroll-y enable-flex>
+      <view class="listItem" wx:for="{{playListInfo.tracks}}" wx:key="id">
+        <image src="{{item.al.picUrl}}"></image>
+        <view class="musicInfo">
+          <text class="musicName">{{item.name}}</text>
+            <view class="author"> 
+            <text wx:for="{{item.ar}}" wx:key="id" wx:for-item="authorItem">{{authorItem.name}}</text>
+            </view>
+        </view>
+        <text class="iconfont icon-gengduo"></text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
